@@ -47,3 +47,24 @@ function removeDuplicates(array) {
 		return array.indexOf(item) === index;
 	});
 }
+
+function createTree(array) {
+	function buildTree(array, start = 0, end = array.length - 1) {
+		if (start > end) return null;
+		const mid = Math.ceil((start + end) / 2);
+
+		const rootNode = createNode(array[mid]);
+		rootNode.left = buildTree(array, start, mid - 1);
+		rootNode.right = buildTree(array, mid + 1, end);
+
+		return rootNode;
+	}
+
+	const fixedArray = removeDuplicates(mergeSort(array));
+	let root = buildTree(fixedArray);
+	return {
+		root,
+	};
+}
+
+const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
