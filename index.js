@@ -149,12 +149,57 @@ function createTree(array) {
 		}
 	}
 
+	function traverse(callback, traverseCallback) {
+		if (!callback) {
+			array = [];
+			traverseCallback((node) => {
+				array.push(node.value);
+			});
+			return array;
+		} else {
+			traverseCallback(callback);
+		}
+	}
+
+	function inOrder(callback = null) {
+		traverse(callback, function traverseInOrder(callback, node = root) {
+			if (node !== null) {
+				traverseInOrder(callback, node.left);
+				callback(node);
+				traverseInOrder(callback, node.right);
+			}
+		});
+	}
+
+	function preOrder(callback = null) {
+		traverse(callback, function traversePreOrder(callback, node = root) {
+			if (node !== null) {
+				callback(node);
+				traversePreOrder(callback, node.left);
+				traversePreOrder(callback, node.right);
+			}
+		});
+	}
+
+	function postOrder(callback = null) {
+		traverse(callback, function traversePostOrder(callback, node = root) {
+			if (node !== null) {
+				traversePostOrder(callback, node.left);
+				traversePostOrder(callback, node.right);
+				callback(node);
+			}
+		});
+	}
+
 	return {
 		root,
 		insert,
 		remove,
 		find,
 		levelOrder,
+		inOrder,
+		preOrder,
+		postOrder,
 	};
 }
 
@@ -162,6 +207,20 @@ const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
 tree.insert(9);
 tree.insert(8);
 tree.remove(4);
-// tree.levelOrder((a) => {
-// 	console.log(a.value);
-// });
+/*tree.levelOrder((a) => {
+	console.log(a.value);
+});
+
+console.log("Tree in order");
+tree.inOrder((a) => {
+	console.log(a.value);
+});
+console.log("Tree pre order");
+tree.preOrder((a) => {
+	console.log(a.value);
+});
+console.log("Tree post order");
+tree.postOrder((a) => {
+	console.log(a.value);
+});
+*/
