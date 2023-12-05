@@ -162,33 +162,43 @@ function createTree(array) {
 	}
 
 	function inOrder(callback = null) {
-		traverse(callback, function traverseInOrder(callback, node = root) {
-			if (node !== null) {
-				traverseInOrder(callback, node.left);
-				callback(node);
-				traverseInOrder(callback, node.right);
+		return traverse(
+			callback,
+			function traverseInOrder(callback, node = root) {
+				if (node !== null) {
+					traverseInOrder(callback, node.left);
+					callback(node);
+					traverseInOrder(callback, node.right);
+				}
 			}
-		});
+		);
 	}
 
 	function preOrder(callback = null) {
-		traverse(callback, function traversePreOrder(callback, node = root) {
-			if (node !== null) {
-				callback(node);
-				traversePreOrder(callback, node.left);
-				traversePreOrder(callback, node.right);
+		return traverse(
+			callback,
+			function traversePreOrder(callback, node = root) {
+				if (node !== null) {
+					callback(node);
+					traversePreOrder(callback, node.left);
+					traversePreOrder(callback, node.right);
+				}
 			}
-		});
+		);
 	}
 
 	function postOrder(callback = null) {
-		traverse(callback, function traversePostOrder(callback, node = root) {
-			if (node !== null) {
-				traversePostOrder(callback, node.left);
-				traversePostOrder(callback, node.right);
-				callback(node);
+		return traverse(
+			callback,
+			function traversePostOrder(callback, node = root) {
+				if (node !== null) {
+					traversePostOrder(callback, node.left);
+					traversePostOrder(callback, node.right);
+					callback(node);
+				}
 			}
-		});
+		);
+	}
 	}
 
 	return {
