@@ -255,10 +255,43 @@ function createTree(array) {
 	};
 }
 
-const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
-tree.insert(9);
-tree.insert(8);
-tree.remove(4);
+function createRandomArray(length) {
+	const array = new Array(length);
+	for (let i = 0; i < length; i++) {
+		array[i] = Math.floor(Math.random() * 99) + 1;
+	}
+	return array;
+}
+function script() {
+	function printAllOrders() {
+		console.log("Tree in order");
+		tree.inOrder((a) => {
+			console.log(a.value);
+		});
+		console.log("Tree pre order");
+		tree.preOrder((a) => {
+			console.log(a.value);
+		});
+		console.log("Tree post order");
+		tree.postOrder((a) => {
+			console.log(a.value);
+		});
+	}
+	const array = createRandomArray(20);
+	const fixedArray = removeDuplicates(mergeSort(array));
+	const tree = createTree(fixedArray);
+	console.log("Is balanced: " + tree.isBalanced());
+	printAllOrders();
+	tree.insert(101);
+	tree.insert(102);
+	tree.insert(103);
+	tree.insert(104);
+	console.log("Is balanced: " + tree.isBalanced());
+	tree.rebalance();
+	console.log("Is balanced: " + tree.isBalanced());
+	printAllOrders();
+}
+script();
 /*tree.levelOrder((a) => {
 	console.log(a.value);
 });
