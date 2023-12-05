@@ -83,12 +83,25 @@ function createTree(array) {
 	}
 
 	function remove(value) {
+		function getSmallestValue(tree) {
+			if (tree.left) {
+				return getSmallestValue(tree.left);
+			} else {
+				return tree.value;
+			}
+		}
+
+		function replace(node) {
+			const newValue = getSmallestValue(node.right);
+			node.value = newValue;
+			node.right = removeRecursive(newValue, node.right);
+			return node;
+		}
+
+		function removeRecursive(value, node) {
 			if (node.value === value) {
 				if (node.left && node.right) {
-					console.log(
-						"here i should delete a node with two children"
-					);
-					return null;
+					return replace(node);
 				} else if (node.left) {
 					return node.left;
 				} else if (node.right) {
@@ -102,7 +115,11 @@ function createTree(array) {
 			}
 			return node;
 		}
-		removeRecursive(value, root);
+		if (root.value === value) {
+			return replace(root);
+		} else {
+			removeRecursive(value, root);
+		}
 	}
 
 	return {
@@ -115,4 +132,4 @@ function createTree(array) {
 const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
 tree.insert(9);
 tree.insert(8);
-tree.remove(3);
+tree.remove(4);
