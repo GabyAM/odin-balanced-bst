@@ -134,9 +134,9 @@ function createTree(array) {
 		return node;
 	}
 
-	function levelOrder(callback, node = root) {
+	function levelOrder(callback) {
 		const queue = [];
-		queue.push(node);
+		queue.push(root);
 		while (queue.length) {
 			const currentNode = queue.shift();
 			callback(currentNode);
