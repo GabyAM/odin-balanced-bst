@@ -81,12 +81,38 @@ function createTree(array) {
 			insertRecursive(value);
 		}
 	}
+
+	function remove(value) {
+			if (node.value === value) {
+				if (node.left && node.right) {
+					console.log(
+						"here i should delete a node with two children"
+					);
+					return null;
+				} else if (node.left) {
+					return node.left;
+				} else if (node.right) {
+					return node.right;
+				}
+				return null;
+			} else if (node.value > value) {
+				node.left = removeRecursive(value, node.left);
+			} else {
+				node.right = removeRecursive(value, node.right);
+			}
+			return node;
+		}
+		removeRecursive(value, root);
+	}
+
 	return {
 		root,
 		insert,
+		remove,
 	};
 }
 
 const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
 tree.insert(9);
 tree.insert(8);
+tree.remove(3);
