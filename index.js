@@ -199,6 +199,41 @@ function createTree(array) {
 			}
 		);
 	}
+
+	function height(node) {
+		if (node === null) {
+			return -1;
+		}
+		const leftHeight = height(node.left);
+		const rightHeight = height(node.right);
+		return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+	}
+
+	function depth(node, tree = root) {
+		if (tree === null || tree.value === node.value) {
+			return 0;
+		}
+
+		let nextDepth;
+		if (tree.value > node.value) {
+			nextDepth = depth(node, tree.left);
+		} else {
+			nextDepth = depth(node, tree.right);
+		}
+		return 1 + nextDepth;
+	}
+
+	function isBalanced(tree) {
+		if (tree !== null) {
+			return Math.abs(height(tree.left) - height(tree.right)) <= 1;
+		}
+	}
+
+	function rebalance() {
+		if (!isBalanced(root)) {
+			const fixedArray = removeDuplicates(inOrder());
+			root = buildTree(fixedArray);
+		}
 	}
 
 	return {
@@ -210,6 +245,8 @@ function createTree(array) {
 		inOrder,
 		preOrder,
 		postOrder,
+		isBalanced,
+		rebalance,
 	};
 }
 
