@@ -122,10 +122,39 @@ function createTree(array) {
 		}
 	}
 
+	function find(value, node = root) {
+		if (node === null) {
+			return null;
+		}
+		if (node.value > value) {
+			return find(value, node.left);
+		} else if (node.value < value) {
+			return find(value, node.right);
+		}
+		return node;
+	}
+
+	function levelOrder(callback, node = root) {
+		const queue = [];
+		queue.push(node);
+		while (queue.length) {
+			const currentNode = queue.shift();
+			callback(currentNode);
+			if (currentNode.left) {
+				queue.push(currentNode.left);
+			}
+			if (currentNode.right) {
+				queue.push(currentNode.right);
+			}
+		}
+	}
+
 	return {
 		root,
 		insert,
 		remove,
+		find,
+		levelOrder,
 	};
 }
 
@@ -133,3 +162,6 @@ const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
 tree.insert(9);
 tree.insert(8);
 tree.remove(4);
+// tree.levelOrder((a) => {
+// 	console.log(a.value);
+// });
