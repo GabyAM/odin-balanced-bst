@@ -62,9 +62,31 @@ function createTree(array) {
 
 	const fixedArray = removeDuplicates(mergeSort(array));
 	let root = buildTree(fixedArray);
+
+	function insert(value) {
+		function insertRecursive(value, node = root) {
+			if (node === null) {
+				return createNode(value);
+			} else if (value < node.value) {
+				node.left = insertRecursive(value, node.left);
+			} else {
+				node.right = insertRecursive(value, node.right);
+			}
+			return node;
+		}
+		//i didn't find a way to directly modify the root in the recursive function
+		if (root === null) {
+			root = createNode(value);
+		} else {
+			insertRecursive(value);
+		}
+	}
 	return {
 		root,
+		insert,
 	};
 }
 
 const tree = createTree([1, 2, 1, 5, 6, 4, 1, 3]);
+tree.insert(9);
+tree.insert(8);
