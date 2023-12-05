@@ -202,7 +202,7 @@ function createTree(array) {
 
 	function height(node) {
 		if (node === null) {
-			return -1;
+			return 0;
 		}
 		const leftHeight = height(node.left);
 		const rightHeight = height(node.right);
@@ -223,10 +223,11 @@ function createTree(array) {
 		return 1 + nextDepth;
 	}
 
-	function isBalanced(tree) {
-		if (tree !== null) {
-			return Math.abs(height(tree.left) - height(tree.right)) <= 1;
+	function isBalanced() {
+		if (root !== null) {
+			return Math.abs(height(root.left) - height(root.right)) <= 1;
 		}
+		return false;
 	}
 
 	function rebalance() {
@@ -236,8 +237,12 @@ function createTree(array) {
 		}
 	}
 
+	function getRoot() {
+		return root;
+	}
+
 	return {
-		root,
+		getRoot,
 		insert,
 		remove,
 		find,
